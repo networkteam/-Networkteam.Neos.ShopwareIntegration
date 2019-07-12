@@ -53,7 +53,6 @@ final class ShopwareProductsDataSource extends AbstractDataSource
 
         $data = $this->parseJsonResponse($response)['data'];
         $options = array_map(function($product) {
-            var_dump($product['id']);
             return [
                 'value' => $product['id'],
                 'label' => $product['translated']['name'],
