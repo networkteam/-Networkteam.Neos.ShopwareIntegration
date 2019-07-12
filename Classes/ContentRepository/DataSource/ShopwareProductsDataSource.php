@@ -37,7 +37,11 @@ final class ShopwareProductsDataSource extends AbstractDataSource
             'headers' => [
                 'Accept' => 'application/json',
                 'SW-Access-Key' => $this->shopwareSettings['key']
-            ]
+            ],
+            'query' => [
+                'sort' => 'name'
+            ],
+
         ]);
 
         try {
@@ -54,7 +58,6 @@ final class ShopwareProductsDataSource extends AbstractDataSource
             ];
         }, $data);
 
-        usort($options, function ($a, $b) {return strnatcmp($a['label'], $b['label']);});
         return $options;
     }
 
