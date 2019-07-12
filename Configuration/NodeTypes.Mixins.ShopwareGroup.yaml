@@ -1,0 +1,8 @@
+'Networkteam.Neos.ShopwareIntegration:Mixin.ShopwareGroup':
+  abstract: true
+  ui:
+    inspector:
+      groups:
+        shopware:
+          label: Shopware
+          icon: 'fab fa-shopware'

@@ -1,0 +1,15 @@
+{
+    "name": "networkteam/neos-shopwareintegration",
+    "type": "neos-package",
+    "description": "Shopware integration for Neos",
+    "version": "1.0.0",
+    "require": {
+        "neos/neos": "~4.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Networkteam\\Neos\\ShopwareIntegration\\": "Classes"
+        }
+    }
+}

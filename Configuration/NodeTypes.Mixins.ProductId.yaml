@@ -1,0 +1,15 @@
+'Networkteam.Neos.ShopwareIntegration:Mixin.ProductId':
+  abstract: true
+  superTypes:
+    'Networkteam.Neos.ShopwareIntegration:Mixin.ShopwareGroup': true
+
+  properties:
+    productId:
+      type: string
+      ui:
+        label: 'Produkt'
+        inspector:
+          group: shopware
+          editor: 'Content/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            dataSourceIdentifier: 'shopware-products'
