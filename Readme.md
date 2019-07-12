@@ -36,6 +36,30 @@ prototype(Vendor.Site:Page) {
 }
 ```
 
+## Product Data
+
+To get an array of product data by id use the Networkteam.Neos.ShopwareIntegration:ProductData Prototype and set the product id
+
+```
+prototype(Vendor.Site:Page) {
+    productData = Networkteam.Neos.ShopwareIntegration:ProductData {
+        productId = <Your product id>
+    }
+}
+```
+
+## Category Data
+
+To get an array of category data by id use the Networkteam.Neos.ShopwareIntegration:CategoryData Prototype and set the category id
+
+```
+prototype(Vendor.Site:Page) {
+    categoryData = Networkteam.Neos.ShopwareIntegration:ProductData {
+        categoryId = <Your category id>
+    }
+}
+```
+
 ## Placeholder
 
 You can use placeholder to add data from your shopware instance.
