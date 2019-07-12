@@ -17,7 +17,11 @@
   },
   "author": "networkteam",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-habitat": "^1.0.1"
+  },
   "devDependencies": {
     "@networkteam/frontend-scripts": "^2.0.0"
   }
