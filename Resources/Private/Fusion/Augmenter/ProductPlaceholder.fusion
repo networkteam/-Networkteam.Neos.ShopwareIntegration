@@ -1,0 +1,6 @@
+prototype(Networkteam.Neos.ShopwareIntegration:ProductPlaceholder) {
+    @class = 'Networkteam\\Neos\\ShopwareIntegration\\Fusion\\ReplaceProductPlaceholderImplementation'
+    value = ${value}
+    node = ${node}
+    productId = null
+}

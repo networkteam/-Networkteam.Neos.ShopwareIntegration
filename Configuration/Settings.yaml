@@ -1,3 +1,9 @@
+Neos:
+  Neos:
+    fusion:
+      autoInclude:
+        Networkteam.Neos.ShopwareIntegration: true
+
 Networkteam:
   Neos:
     ShopwareIntegration:

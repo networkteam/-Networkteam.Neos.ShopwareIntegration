@@ -8,6 +8,7 @@
       type: string
       ui:
         label: 'Produkt'
+        reloadIfChanged: true
         inspector:
           group: shopware
           editor: 'Content/Inspector/Editors/SelectBoxEditor'
