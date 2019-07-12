@@ -9,9 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 
-final class ShopwareProductsDataSource extends AbstractDataSource
+final class ShopwareCategoryDataSource extends AbstractDataSource
 {
-    static protected $identifier = 'shopware-products';
+    static protected $identifier = 'shopware-category';
 
     /**
      * @var GuzzleClient
@@ -46,17 +46,16 @@ final class ShopwareProductsDataSource extends AbstractDataSource
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product');
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/category');
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
 
         $data = $this->parseJsonResponse($response)['data'];
-        $options = array_map(function($product) {
+        $options = array_map(function($category) {
             return [
-                'value' => $product['id'],
-                'label' => $product['translated']['name'],
-                'icon' => !$product['displayInListing'] ? 'fas fa-eye-slash' : ''
+                'value' => $category['id'],
+                'label' => $category['translated']['name']
             ];
         }, $data);
 

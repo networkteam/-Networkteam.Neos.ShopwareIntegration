@@ -11,10 +11,10 @@ use Neos\Utility\Arrays;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
-class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
+class ReplaceCategoryPlaceholderImplementation extends AbstractFusionObject
 {
 
-    const PLACEHOLDER_PATTERN = '/\{\{shopware.product.(.*?)\}\}/';
+    const PLACEHOLDER_PATTERN = '/\{\{shopware.category.(.*?)\}\}/';
     /**
      * @var GuzzleClient
      */
@@ -34,9 +34,8 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
      */
     public function evaluate()
     {
-
         $text = $this->fusionValue('value');
-        $productId = $this->fusionValue('productId');
+        $categoryId = $this->fusionValue('categoryId');
 
         if ($text === '' || $text === null) {
             return '';
@@ -46,7 +45,7 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
             throw new Exception(sprintf('Only strings can be processed by this Fusion object, given: "%s".', gettype($text)), 1562926678);
         }
 
-        if (!$productId || !is_string($productId)) {
+        if (!$categoryId || !is_string($categoryId)) {
             return $text;
         }
 
@@ -69,17 +68,17 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product/' . $productId);
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/category/' . $categoryId);
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
 
         $processedResponse = $this->parseJsonResponse($response)['data'];
 
-        $processedContent = preg_replace_callback(self::PLACEHOLDER_PATTERN, function (array $matches) use ($processedResponse, $node) {
-            $productValue = Arrays::getValueByPath($processedResponse, $matches[1]);
+        $processedContent = preg_replace_callback(self::PLACEHOLDER_PATTERN, function (array $matches) use ($processedResponse) {
+            $categoryValue = Arrays::getValueByPath($processedResponse, $matches[1]);
 
-            return $productValue === null ? $matches[0] : $productValue;
+            return $categoryValue === null ? $matches[0] : $categoryValue;
         }, $text);
 
         return $processedContent;
