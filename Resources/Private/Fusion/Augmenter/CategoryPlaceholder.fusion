@@ -1,0 +1,6 @@
+prototype(Networkteam.Neos.ShopwareIntegration:CategoryPlaceholder) {
+    @class = 'Networkteam\\Neos\\ShopwareIntegration\\Fusion\\ReplaceCategoryPlaceholderImplementation'
+    value = ${value}
+    node = ${node}
+    categoryId = null
+}

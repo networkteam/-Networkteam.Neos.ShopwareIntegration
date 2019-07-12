@@ -11,10 +11,8 @@ use Neos\Utility\Arrays;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
-class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
+class ProductsByCategoryImplementation extends AbstractFusionObject
 {
-
-    const PLACEHOLDER_PATTERN = '/\{\{shopware.product.(.*?)\}\}/';
     /**
      * @var GuzzleClient
      */
@@ -34,30 +32,10 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
      */
     public function evaluate()
     {
+        $categoryId = $this->fusionValue('categoryId');
 
-        $text = $this->fusionValue('value');
-        $productId = $this->fusionValue('productId');
-
-        if ($text === '' || $text === null) {
-            return '';
-        }
-
-        if (!is_string($text)) {
-            throw new Exception(sprintf('Only strings can be processed by this Fusion object, given: "%s".', gettype($text)), 1562926678);
-        }
-
-        if (!$productId || !is_string($productId)) {
-            return $text;
-        }
-
-        $node = $this->fusionValue('node');
-
-        if (!$node instanceof NodeInterface) {
-            throw new Exception(sprintf('The current node must be an instance of NodeInterface, given: "%s".', gettype($text)), 1382624087);
-        }
-
-        if ($node->getContext()->getWorkspace()->getName() !== 'live') {
-            return $text;
+        if (!$categoryId) {
+            return [];
         }
 
         $this->guzzle = new GuzzleClient([
@@ -65,24 +43,19 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
             'headers' => [
                 'Accept' => 'application/json',
                 'SW-Access-Key' => $this->shopwareSettings['key']
+            ],
+            'query' => [
+                'filter[product.categoryTree]' => $categoryId
             ]
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product/' . $productId);
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product');
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
 
-        $processedResponse = $this->parseJsonResponse($response)['data'];
-
-        $processedContent = preg_replace_callback(self::PLACEHOLDER_PATTERN, function (array $matches) use ($processedResponse, $node) {
-            $productValue = Arrays::getValueByPath($processedResponse, $matches[1]);
-
-            return $productValue === null ? $matches[0] : $productValue;
-        }, $text);
-
-        return $processedContent;
+        return $this->parseJsonResponse($response)['data'];
     }
 
     private function parseJsonResponse(ResponseInterface $response): array
