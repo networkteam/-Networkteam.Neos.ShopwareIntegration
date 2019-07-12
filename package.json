@@ -1,0 +1,24 @@
+{
+  "name": "neos-shopwareintegration",
+  "version": "1.0.0",
+  "description": "",
+  "basePackageName": "base.package",
+  "scripts": {
+    "build": "npm run webpack",
+    "build:dev": "npm run webpack:dev",
+    "start": "npm run webpack:watch",
+    "test": "npm run webpack:test",
+    "test-watch": "npm run webpack:test-watch",
+    "webpack": "networkteam-asset-build prod --basePackage $npm_package_basePackageName --noIconFont",
+    "webpack:dev": "networkteam-asset-build dev --basePackage $npm_package_basePackageName --noIconFont",
+    "webpack:watch": "networkteam-asset-build watch --basePackage $npm_package_basePackageName --noIconFont",
+    "webpack:test": "networkteam-asset-build test --basePackage $npm_package_basePackageName --noIconFont",
+    "webpack:test-watch": "networkteam-asset-build test-watch --basePackage $npm_package_basePackageName --noIconFont"
+  },
+  "author": "networkteam",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@networkteam/frontend-scripts": "^2.0.0"
+  }
+}
