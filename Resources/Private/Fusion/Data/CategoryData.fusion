@@ -1,0 +1,5 @@
+prototype(Networkteam.Neos.ShopwareIntegration:CategoryData) {
+    @class = 'Networkteam\\Neos\\ShopwareIntegration\\Fusion\\CategoryDataImplementation'
+    node = ${node}
+    categoryId = ''
+}

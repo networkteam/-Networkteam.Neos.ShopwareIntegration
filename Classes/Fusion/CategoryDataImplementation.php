@@ -1,18 +1,18 @@
 <?php
-declare(strict_types = 1);
-namespace Networkteam\Neos\ShopwareIntegration\ContentRepository\DataSource;
+namespace Networkteam\Neos\ShopwareIntegration\Fusion;
+
 
 use Neos\Flow\Annotations as Flow;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use Neos\Neos\Service\DataSource\AbstractDataSource;
+use Neos\Neos\Domain\Exception;
+use Neos\Utility\Arrays;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
-final class ShopwareProductsDataSource extends AbstractDataSource
+class CategoryDataImplementation extends AbstractFusionObject
 {
-    static protected $identifier = 'shopware-products';
-
     /**
      * @var GuzzleClient
      */
@@ -25,43 +25,34 @@ final class ShopwareProductsDataSource extends AbstractDataSource
     protected $shopwareSettings;
 
     /**
-     * @param NodeInterface $node The node that is currently edited (optional)
-     * @param array $arguments
-     * @return array
+     * Replace Placeholders of a product
+     *
+     * @return string
+     * @throws Exception
      */
-    public function getData(NodeInterface $node = null, array $arguments): array
+    public function evaluate()
     {
+        $categoryId = $this->fusionValue('categoryId');
+
+        if (!$categoryId) {
+            return [];
+        }
 
         $this->guzzle = new GuzzleClient([
             'base_uri' => $this->shopwareSettings['api'],
             'headers' => [
                 'Accept' => 'application/json',
                 'SW-Access-Key' => $this->shopwareSettings['key']
-            ],
-            'query' => [
-                'sort' => 'name',
-                'limit' => 500
-            ],
-
+            ]
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product');
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/category/' . $categoryId);
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
 
-        $data = $this->parseJsonResponse($response)['data'];
-        $options = array_map(function($product) {
-            var_dump($product['id']);
-            return [
-                'value' => $product['id'],
-                'label' => $product['translated']['name'],
-                'icon' => !$product['displayInListing'] ? 'fas fa-eye-slash' : ''
-            ];
-        }, $data);
-
-        return $options;
+        return $this->parseJsonResponse($response)['data'];
     }
 
     private function parseJsonResponse(ResponseInterface $response): array

@@ -1,0 +1,5 @@
+prototype(Networkteam.Neos.ShopwareIntegration:ProductData) {
+    @class = 'Networkteam\\Neos\\ShopwareIntegration\\Fusion\\ProductDataImplementation'
+    node = ${node}
+    productId = ''
+}
