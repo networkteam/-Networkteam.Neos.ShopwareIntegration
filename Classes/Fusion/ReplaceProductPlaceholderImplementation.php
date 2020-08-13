@@ -56,7 +56,7 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
             throw new Exception(sprintf('The current node must be an instance of NodeInterface, given: "%s".', gettype($text)), 1382624087);
         }
 
-        if ($node->getContext()->getWorkspace()->getName() !== 'live') {
+        if ($node->getContext()->isInBackend()) {
             return $text;
         }
 
@@ -69,7 +69,7 @@ class ReplaceProductPlaceholderImplementation extends AbstractFusionObject
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product/' . $productId);
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v3/product/' . $productId);
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }

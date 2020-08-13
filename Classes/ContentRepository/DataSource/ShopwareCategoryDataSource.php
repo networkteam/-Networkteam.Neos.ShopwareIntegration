@@ -29,7 +29,7 @@ final class ShopwareCategoryDataSource extends AbstractDataSource
      * @param array $arguments
      * @return array
      */
-    public function getData(NodeInterface $node = null, array $arguments): array
+    public function getData(NodeInterface $node = null, array $arguments = []): array
     {
 
         $this->guzzle = new GuzzleClient([
@@ -46,7 +46,7 @@ final class ShopwareCategoryDataSource extends AbstractDataSource
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/category');
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v3/category');
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
