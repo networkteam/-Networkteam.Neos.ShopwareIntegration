@@ -22,23 +22,24 @@
     "module": true
   },
   "rules": {
-    "indent": ["error", 2],
+    "indent": ["warn", 2],
     "curly": [
-      "error",
+      "warn",
       "all"
     ],
     "strict": [
       "warn",
       "global"
     ],
+    "no-unused-vars": "warn",
     "no-console": "warn",
     "keyword-spacing": [
-      "error",
+      "warn",
       {}
     ],
-    "no-param-reassign": "error",
+    "no-param-reassign": "warn",
     "one-var": [
-      "error",
+      "warn",
       {
         "var": "always",
         "let": "never",
@@ -46,11 +47,11 @@
       }
     ],
     "wrap-iife": [
-      "error",
+      "warn",
       "inside"
     ],
     "space-before-function-paren": [
-      "error",
+      "warn",
       {
         "anonymous": "always",
         "named": "never",
@@ -58,23 +59,23 @@
       }
     ],
     "array-bracket-spacing": [
-      "error",
+      "warn",
       "never",
       {}
     ],
     "space-in-parens": [
-      "error",
+      "warn",
       "never"
     ],
     "key-spacing": [
-      "error",
+      "warn",
       {
         "beforeColon": false,
         "afterColon": true
       }
     ],
     "comma-style": [
-      "error",
+      "warn",
       "last"
     ],
     "comma-dangle": [
@@ -82,24 +83,24 @@
       "never"
     ],
     "space-unary-ops": [
-      "error",
+      "warn",
       {
         "words": false,
         "nonwords": false
       }
     ],
-    "space-infix-ops": "error",
+    "space-infix-ops": "warn",
     "camelcase": [
-      "error",
+      "warn",
       {
         "properties": "never"
       }
     ],
-    "no-with": "error",
-    "no-undef": "error",
-    "no-multiple-empty-lines": "error",
+    "no-with": "warn",
+    "no-undef": "warn",
+    "no-multiple-empty-lines": "warn",
     "linebreak-style": [
-      "error",
+      "warn",
       "unix"
     ],
     "quotes": [
@@ -109,21 +110,21 @@
         "avoidEscape": true
       }
     ],
-    "no-mixed-spaces-and-tabs": "error",
-    "no-trailing-spaces": "error",
+    "no-mixed-spaces-and-tabs": "warn",
+    "no-trailing-spaces": "warn",
     "brace-style": [
-      "error",
+      "warn",
       "1tbs",
       {
         "allowSingleLine": true
       }
     ],
     "yoda": [
-      "error",
+      "warn",
       "never"
     ],
     "semi": [
-      "error",
+      "warn",
       "always"
     ]
   }
