@@ -68,7 +68,7 @@ class ReplaceCategoryPlaceholderImplementation extends AbstractFusionObject
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/category/' . $categoryId);
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v3/category/' . $categoryId);
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }

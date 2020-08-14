@@ -29,7 +29,7 @@ final class ShopwareProductsDataSource extends AbstractDataSource
      * @param array $arguments
      * @return array
      */
-    public function getData(NodeInterface $node = null, array $arguments): array
+    public function getData(NodeInterface $node = null, array $arguments = []): array
     {
 
         $this->guzzle = new GuzzleClient([
@@ -46,7 +46,7 @@ final class ShopwareProductsDataSource extends AbstractDataSource
         ]);
 
         try {
-            $response = $this->guzzle->request('GET', 'sales-channel-api/v1/product');
+            $response = $this->guzzle->request('GET', 'sales-channel-api/v3/product');
         } catch (GuzzleException $exception) {
             throw new \RuntimeException(sprintf('Uri Getter: %s', $exception->getMessage()), 1560856269, $exception);
         }
@@ -55,8 +55,7 @@ final class ShopwareProductsDataSource extends AbstractDataSource
         $options = array_map(function($product) {
             return [
                 'value' => $product['id'],
-                'label' => $product['translated']['name'],
-                'icon' => !$product['displayInListing'] ? 'fas fa-eye-slash' : ''
+                'label' => $product['translated']['name']
             ];
         }, $data);
 
