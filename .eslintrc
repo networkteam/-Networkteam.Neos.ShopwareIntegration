@@ -1,131 +1,15 @@
-// "off" or 0 - turn the rule off
-// "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
-// "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
-
 {
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
-  "parser": "babel-eslint",
-  "extends": "eslint:recommended",
-  "env": {
-    "browser": true,
-    "jquery": true,
-    "node": true
-  },
-  "globals": {
-    "nwt": true,
-    "require": true,
-    "Modernizr": true,
-    "WOW": true,
-    "__dirname": true,
-    "module": true
-  },
-  "rules": {
-    "indent": ["warn", 2],
-    "curly": [
-      "warn",
-      "all"
-    ],
-    "strict": [
-      "warn",
-      "global"
-    ],
-    "no-unused-vars": "warn",
-    "no-console": "warn",
-    "keyword-spacing": [
-      "warn",
-      {}
-    ],
-    "no-param-reassign": "warn",
-    "one-var": [
-      "warn",
-      {
-        "var": "always",
-        "let": "never",
-        "const": "never"
-      }
-    ],
-    "wrap-iife": [
-      "warn",
-      "inside"
-    ],
-    "space-before-function-paren": [
-      "warn",
-      {
-        "anonymous": "always",
-        "named": "never",
-        "asyncArrow": "ignore"
-      }
-    ],
-    "array-bracket-spacing": [
-      "warn",
-      "never",
-      {}
-    ],
-    "space-in-parens": [
-      "warn",
-      "never"
-    ],
-    "key-spacing": [
-      "warn",
-      {
-        "beforeColon": false,
-        "afterColon": true
-      }
-    ],
-    "comma-style": [
-      "warn",
-      "last"
-    ],
-    "comma-dangle": [
-      "off",
-      "never"
-    ],
-    "space-unary-ops": [
-      "warn",
-      {
-        "words": false,
-        "nonwords": false
-      }
-    ],
-    "space-infix-ops": "warn",
-    "camelcase": [
-      "warn",
-      {
-        "properties": "never"
-      }
-    ],
-    "no-with": "warn",
-    "no-undef": "warn",
-    "no-multiple-empty-lines": "warn",
-    "linebreak-style": [
-      "warn",
-      "unix"
-    ],
-    "quotes": [
-      1,
-      "single",
-      {
-        "avoidEscape": true
-      }
-    ],
-    "no-mixed-spaces-and-tabs": "warn",
-    "no-trailing-spaces": "warn",
-    "brace-style": [
-      "warn",
-      "1tbs",
-      {
-        "allowSingleLine": true
-      }
-    ],
-    "yoda": [
-      "warn",
-      "never"
-    ],
-    "semi": [
-      "warn",
-      "always"
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
     ]
-  }
 }

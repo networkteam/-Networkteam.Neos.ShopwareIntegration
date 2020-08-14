@@ -2,7 +2,6 @@
 
 module.exports = function (env, args) {
   return {
-    target: 'web',
     entry: {
       header: null,
       footer: null,

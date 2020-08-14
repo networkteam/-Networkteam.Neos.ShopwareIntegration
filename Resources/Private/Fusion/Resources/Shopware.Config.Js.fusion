@@ -1,0 +1,13 @@
+prototype(Networkteam.Neos.ShopwareIntegration:Shopware.Config.Js) < prototype(Neos.Fusion:Tag) {
+    @context.configObj = Neos.Fusion:DataStructure {
+        apiKey = ${Configuration.setting('Networkteam.Neos.ShopwareIntegration.key')}
+        baseUri = ${Configuration.setting('Networkteam.Neos.ShopwareIntegration.api')}
+    }
+
+    tagName = 'script'
+    attributes {
+        type = 'application/json'
+        id = 'shopware-connector-config'
+    }
+    content = ${Json.stringify(configObj)}
+}

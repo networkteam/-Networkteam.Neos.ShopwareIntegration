@@ -1,9 +1,14 @@
-const addToBasketOnClick = ({proxy, productId}) => {
+import { useApiClient } from '../Api/Context';
+
+const addToBasketOnClick = ({ proxy, productId }) => {
+  const apiClient = useApiClient();
+
   proxy.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log('clicked');
+    console.log(productId);
+    apiClient.addProductToCart(productId);
   });
-  console.log(connector);
+
   return [];
 };
 
