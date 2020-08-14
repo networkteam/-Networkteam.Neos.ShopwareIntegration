@@ -1,3 +1,5 @@
+import 'core-js';
+import 'regenerator-runtime/runtime';
 import axios from 'axios';
 
 import * as endpoints from './Api/endpoints';
@@ -6,7 +8,6 @@ export class ShopwareConnector {
   client = null;
 
   constructor({ baseUri, apiKey }) {
-    console.log(baseUri, apiKey);
     this.client = axios.create({
       baseURL: baseUri,
       headers: {
@@ -17,10 +18,14 @@ export class ShopwareConnector {
 
   addProductToCart(productId) {
     const url = endpoints.ADD_TO_CART_BASE + productId;
-    console.log(url);
-    console.log(this.client);
-    this.client.post(url).then((data) => {
-      console.log(data);
+    return new Promise((resolve, reject) => {
+      this.client
+        .post(url)
+        .then((data) => {
+          console.log(data);
+          resolve('success');
+        })
+        .catch((e) => reject(e));
     });
   }
 }

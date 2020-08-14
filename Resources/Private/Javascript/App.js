@@ -1,3 +1,5 @@
+import 'core-js';
+import 'regenerator-runtime/runtime';
 import ReactHabitat from 'react-habitat';
 import ApiDomFactory from './Habitat/factory';
 import AddToBasket from './Components/AddToBasket';
