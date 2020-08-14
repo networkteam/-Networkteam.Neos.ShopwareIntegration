@@ -1,0 +1,4 @@
+prototype(Networkteam.Neos.ShopwareIntegration:SalutationData) {
+    @class = 'Networkteam\\Neos\\ShopwareIntegration\\Fusion\\SalutationDataImplementation'
+    node = ${node}
+}
