@@ -3,7 +3,8 @@ import 'regenerator-runtime/runtime';
 import ReactHabitat from 'react-habitat';
 import ApiDomFactory from './Habitat/factory';
 import AddToBasket from './Components/AddToBasket';
-import Cart from './Components/Cart';
+import CartItems from './Components/CartItems';
+import CartSummary from './Components/CartSummary';
 import Connector from 'shopware-connector';
 
 class App extends ReactHabitat.Bootstrapper {
@@ -23,8 +24,13 @@ class App extends ReactHabitat.Bootstrapper {
       .withOptions({ replaceDisabled: true });
 
     builder
-      .register(Cart)
-      .as('Cart');
+      .register(CartItems)
+      .as('CartItems');
+
+    builder
+      .register(CartSummary)
+      .as('CartSummary')
+      .withOptions({ replaceDisabled: true });
 
     this.setContainer(builder.build());
   }

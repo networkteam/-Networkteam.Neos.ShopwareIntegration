@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useApiClient } from '../Api/Context';
 import { replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
+const CartItems = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
     fetchData();
   },[])
 
-  const CartContent = () => {
+  const Content = () => {
     if(loading) {
       return (
         <div className={'loading placeholder'}></div>
@@ -42,8 +42,8 @@ const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
   };
 
   return (
-    <CartContent />
+    <Content />
   );
 };
 
-export default Cart;
+export default CartItems;

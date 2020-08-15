@@ -8,8 +8,10 @@ export const replaceTemplatePlaceholder = (template, data) => {
     let map = {};
 
     placeholder.forEach((element) => {
-        const variable = element.slice(1, -1);
-        const value = getDeepObjectValue(data, variable);
+        const isCurrency = element.endsWith('->currency%');
+        const variable = element.slice(1, isCurrency ? -11 : -1);
+        const unformattedValue = getDeepObjectValue(data, variable);
+        const value = isCurrency ? currencyFormatter(unformattedValue) : unformattedValue;
 
         regex.push(element);
         map[element] = value;
@@ -32,3 +34,12 @@ export const getDeepObjectValue = (object, path) => {
 
     return current;
 };
+
+// TODO: get selected currency dynamically
+export const currencyFormatter = (number) => {
+    return new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2
+    }).format(number);
+}

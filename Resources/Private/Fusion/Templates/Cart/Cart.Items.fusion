@@ -1,4 +1,4 @@
-prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.Fusion:Component) {
+prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart.Items) < prototype(Neos.Fusion:Component) {
     tagName = 'ul'
     emptyCartMessage = 'There are no items in your shopping cart.'
     additionalClasses = ''
@@ -6,7 +6,7 @@ prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.
     renderer = afx`
         <script
             type="text/template"
-            data-component="Cart"
+            data-component="CartItems"
             data-prop-tag-name={props.tagName}
             data-prop-empty-cart-message={props.emptyCartMessage}
             data-prop-additional-classes={props.additionalClasses}
@@ -18,8 +18,8 @@ prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.
                         <img src="%cover.url%" alt="" />
                     </dd>
                     <dd>%quantity%</dd>
-                    <dd>%price.unitPrice%</dd>
-                    <dd>%price.totalPrice%</dd>
+                    <dd>%price.unitPrice->currency%</dd>
+                    <dd>%price.totalPrice->currency%</dd>
                 </dl>
             </li>
         </script>
