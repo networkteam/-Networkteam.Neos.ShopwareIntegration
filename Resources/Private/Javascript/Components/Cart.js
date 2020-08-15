@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useApiClient } from '../Api/Context';
 import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const Cart = ({ proxy, tagname, additionalClass }) => {
+const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const template = proxy.innerHTML;
   const placeholder = getTemplatePlaceholder(template);
-  const Tag = `${tagname}`;
+  const Tag = `${tagName}`;
 
   let cartContent = ''
 
@@ -16,19 +17,33 @@ const Cart = ({ proxy, tagname, additionalClass }) => {
     async function fetchData() {
       const result = await apiClient.getCart();
       setCartItems(result.data.data.lineItems);
+      setLoading(false);
     }
     fetchData();
   },[])
 
-  cartItems.forEach((data) => {
-    cartContent += replaceTemplatePlaceholder(template, placeholder, data);
-  })
+  const CartContent = () => {
+    if(loading) {
+      return (
+        <div className={'loading placeholder'}></div>
+      );
+    } else if(cartItems.length === 0) {
+      return (
+        <div className={'message info'}>{emptyCartMessage}</div>
+      );
+    } else {
+      cartItems.forEach((data) => {
+        cartContent += replaceTemplatePlaceholder(template, placeholder, data);
+      })
+
+      return (
+        <Tag className={additionalClasses} dangerouslySetInnerHTML={{ __html: cartContent }}></Tag>
+      );
+    }
+  };
 
   return (
-    <Tag
-      className={[additionalClass, cartItems.length === 0 ? 'loading' : ''].join(' ')}
-      dangerouslySetInnerHTML={{ __html: cartContent }}
-    ></Tag>
+    <CartContent />
   );
 };
 
