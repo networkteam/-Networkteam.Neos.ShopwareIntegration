@@ -4,7 +4,7 @@ prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.
             type="text/template"
             data-component="Cart"
             data-prop-tagname="ul"
-            data-prop-additional-class="test-klasse supi"
+            data-prop-additional-class="cart"
         >
             <li>
                 <dl>
