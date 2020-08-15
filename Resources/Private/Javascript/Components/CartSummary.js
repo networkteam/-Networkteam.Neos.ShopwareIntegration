@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import propTypes from "prop-types";
 
 import { useApiClient } from '../Api/Context';
 import { replaceTemplatePlaceholder } from '../Helper/templateHelper';
@@ -21,7 +22,6 @@ const CartSummary = ({ proxy, tagName, additionalClasses }) => {
 
     document.addEventListener('cart-changed', () => {
       fetchData();
-      console.log('Cart updated');
     })
   },[])
 
@@ -40,6 +40,12 @@ const CartSummary = ({ proxy, tagName, additionalClasses }) => {
   return (
     <Content />
   );
+};
+
+CartSummary.propTypes = {
+  proxy: propTypes.any,
+  tagName: propTypes.string,
+  additionalClasses: propTypes.string
 };
 
 export default CartSummary;
