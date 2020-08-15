@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useApiClient } from '../Api/Context';
 import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const Cart = ({ proxy, tagname }) => {
+const Cart = ({ proxy, tagname, additionalClass }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
   const template = proxy.innerHTML;
@@ -26,7 +26,7 @@ const Cart = ({ proxy, tagname }) => {
 
   return (
     <Tag
-      className={cartItems.length === 0 ? 'loading' : ''}
+      className={[additionalClass, cartItems.length === 0 ? 'loading' : ''].join(' ')}
       dangerouslySetInnerHTML={{ __html: cartContent }}
     ></Tag>
   );

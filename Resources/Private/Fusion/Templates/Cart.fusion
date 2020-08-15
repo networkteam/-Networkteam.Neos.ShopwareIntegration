@@ -1,6 +1,11 @@
 prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.Fusion:Component) {
     renderer = afx`
-        <script data-component="Cart" type="text/template" data-prop-tagname="ul">
+        <script
+            type="text/template"
+            data-component="Cart"
+            data-prop-tagname="ul"
+            data-prop-additional-class="test-klasse supi"
+        >
             <li>
                 <dl>
                     <dt>%label%</dt>
