@@ -59,6 +59,23 @@ export class ShopwareConnector {
     });
   }
 
+  removeLineItemFromCart(lineItemId) {
+    const url = endpoints.DELETE_LINE_ITEM_BASE + lineItemId;
+    const hasCookie = this.setContextTokenHeader();
+
+    return new Promise((resolve, reject) => {
+      this.client
+        .delete(url)
+        .then(({ data }) => {
+          if (!hasCookie) {
+            this.setContextTokenHeader(data.data.token);
+          }
+          resolve('success');
+        })
+        .catch((e) => reject(e));
+    });
+  }
+
   getCart() {
     const url = endpoints.GET_CART;
     const hasCookie = this.setContextTokenHeader();
