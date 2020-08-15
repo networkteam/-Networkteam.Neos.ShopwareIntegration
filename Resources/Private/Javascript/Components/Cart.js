@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useApiClient } from '../Api/Context';
 import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const Cart = ({ proxy }) => {
+const Cart = ({ proxy, tagname }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
   const template = proxy.innerHTML;
   const placeholder = getTemplatePlaceholder(template);
+  const Tag = `${tagname}`;
 
   let cartContent = ''
 
@@ -24,10 +25,10 @@ const Cart = ({ proxy }) => {
   })
 
   return (
-    <div
+    <Tag
       className={cartItems.length === 0 ? 'loading' : ''}
       dangerouslySetInnerHTML={{ __html: cartContent }}
-    ></div>
+    ></Tag>
   );
 };
 
