@@ -6,7 +6,6 @@ import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/te
 const Cart = ({ proxy }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
-  const [loading, setLoading] = useState(true);
   const template = proxy.innerHTML;
   const placeholder = getTemplatePlaceholder(template);
 
@@ -16,7 +15,6 @@ const Cart = ({ proxy }) => {
     async function fetchData() {
       const result = await apiClient.getCart();
       setCartItems(result.data.data.lineItems);
-      setLoading(false);
     }
     fetchData();
   },[])
@@ -27,7 +25,7 @@ const Cart = ({ proxy }) => {
 
   return (
     <div
-      className={loading ? 'loading' : ''}
+      className={cartItems.length === 0 ? 'loading' : ''}
       dangerouslySetInnerHTML={{ __html: cartContent }}
     ></div>
   );
