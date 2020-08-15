@@ -2,7 +2,8 @@ export const getTemplatePlaceholder = (template) => {
     return [...new Set(template.match(/%(.*?)%/g))];
 };
 
-export const replaceTemplatePlaceholder = (template, placeholder, data) => {
+export const replaceTemplatePlaceholder = (template, data) => {
+    const placeholder = getTemplatePlaceholder(template);
     let regex = []
     let map = {};
 

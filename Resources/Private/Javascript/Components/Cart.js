@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { useApiClient } from '../Api/Context';
-import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/templateHelper';
+import { replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
 const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const template = proxy.innerHTML;
-  const placeholder = getTemplatePlaceholder(template);
   const Tag = `${tagName}`;
 
   let cartContent = ''
@@ -33,7 +32,7 @@ const Cart = ({ proxy, tagName, additionalClasses, emptyCartMessage }) => {
       );
     } else {
       cartItems.forEach((data) => {
-        cartContent += replaceTemplatePlaceholder(template, placeholder, data);
+        cartContent += replaceTemplatePlaceholder(template, data);
       })
 
       return (
