@@ -10,6 +10,9 @@ prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart.Summary) < prototy
             data-prop-additional-classes={props.additionalClasses}
         >
             <dl>
+                <dt>Different products:</dt>
+                <dd>%lineItems.length%</dd>
+
                 <dt>Total:</dt>
                 <dd>%price.positionPrice->currency%</dd>
 
