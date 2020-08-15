@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
 import { useApiClient } from '../Api/Context';
+import { getTemplatePlaceholder, replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
 const Cart = ({ proxy }) => {
   const apiClient = useApiClient();
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const template = proxy.innerHTML;
+  const placeholder = getTemplatePlaceholder(template);
+
+  let cartContent = ''
 
   useEffect(() => {
     async function fetchData() {
-      proxy.classList.add('loading');
       const result = await apiClient.getCart();
-      proxy.classList.remove('loading');
       setCartItems(result.data.data.lineItems);
+      setLoading(false);
     }
     fetchData();
   },[])
 
-  return (
-    <ul>
-      {cartItems.map(item => (
-        <li key={item.id}>
-          <dl>
-            <dt>{item.label}</dt>
-            <dd>
-              <img src={item.cover.url} />
-            </dd>
-            <dd>{item.quantity}</dd>
-            <dd>{item.price.unitPrice}</dd>
-            <dd>{item.price.totalPrice}</dd>
-          </dl>
-        </li>
-      ))}
-    </ul>
-  );
+  cartItems.forEach((data) => {
+    cartContent += replaceTemplatePlaceholder(template, placeholder, data);
+  })
 
+  return (
+    <div
+      className={loading ? 'loading' : ''}
+      dangerouslySetInnerHTML={{ __html: cartContent }}
+    ></div>
+  );
 };
 
 export default Cart;

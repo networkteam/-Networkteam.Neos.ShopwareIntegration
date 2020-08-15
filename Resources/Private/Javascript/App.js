@@ -24,8 +24,7 @@ class App extends ReactHabitat.Bootstrapper {
 
     builder
       .register(Cart)
-      .as('Cart')
-      .withOptions({ replaceDisabled: true });
+      .as('Cart');
 
     this.setContainer(builder.build());
   }

@@ -1,0 +1,19 @@
+prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <ul>
+            <script data-component="Cart" type="text/template">
+                <li>
+                    <dl>
+                        <dt>%label%</dt>
+                        <dd>
+                        <img src="%cover.url%" />
+                        </dd>
+                        <dd>%quantity%</dd>
+                        <dd>%price.unitPrice%</dd>
+                        <dd>%price.totalPrice%</dd>
+                    </dl>
+                </li>
+            </script>
+        </ul>
+    `
+}
