@@ -76,6 +76,23 @@ export class ShopwareConnector {
     });
   }
 
+  updateLineItemInCart(lineItemId, parameter) {
+    const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
+    const hasCookie = this.setContextTokenHeader();
+
+    return new Promise((resolve, reject) => {
+      this.client
+        .patch(url, {...parameter})
+        .then((data) => {
+          if (!hasCookie) {
+            this.setContextTokenHeader(data.data.token);
+          }
+          resolve('success');
+        })
+        .catch((e) => reject(e));
+    });
+  }
+
   getCart() {
     const url = endpoints.GET_CART;
     const hasCookie = this.setContextTokenHeader();
@@ -88,23 +105,6 @@ export class ShopwareConnector {
             this.setContextTokenHeader(data.data.token);
           }
           resolve(data);
-        })
-        .catch((e) => reject(e));
-    });
-  }
-
-  updateLineItem(lineItemId, parameter) {
-    const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
-    const hasCookie = this.setContextTokenHeader();
-
-    return new Promise((resolve, reject) => {
-      this.client
-        .patch(url, {...parameter})
-        .then((data) => {
-          if (!hasCookie) {
-            this.setContextTokenHeader(data.data.token);
-          }
-          resolve('success');
         })
         .catch((e) => reject(e));
     });

@@ -16,7 +16,13 @@ const CartSummary = ({ proxy, tagName, additionalClasses }) => {
       setCartData(result.data.data);
       setLoading(false);
     }
+
     fetchData();
+
+    document.addEventListener('cart-changed', () => {
+      fetchData();
+      console.log('Cart updated');
+    })
   },[])
 
   const Content = () => {

@@ -4,6 +4,7 @@ import ReactHabitat from 'react-habitat';
 import ApiDomFactory from './Habitat/factory';
 import AddToCart from './Components/AddToCart';
 import RemoveFromCart from './Components/RemoveFromCart';
+import UpdateQuantity from './Components/UpdateQuantity';
 import CartItems from './Components/CartItems';
 import CartSummary from './Components/CartSummary';
 import Connector from 'shopware-connector';
@@ -27,6 +28,11 @@ class App extends ReactHabitat.Bootstrapper {
     builder
       .register(RemoveFromCart)
       .as('RemoveFromCart')
+      .withOptions({ replaceDisabled: true });
+
+    builder
+      .register(UpdateQuantity)
+      .as('UpdateQuantity')
       .withOptions({ replaceDisabled: true });
 
     builder
