@@ -6,7 +6,7 @@ prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.
                     <dl>
                         <dt>%label%</dt>
                         <dd>
-                        <img src="%cover.url%" />
+                            <img src="%cover.url%" alt="" />
                         </dd>
                         <dd>%quantity%</dd>
                         <dd>%price.unitPrice%</dd>
