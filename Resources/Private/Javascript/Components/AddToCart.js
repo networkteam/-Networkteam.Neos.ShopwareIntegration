@@ -1,17 +1,20 @@
 import { useApiClient } from '../Api/Context';
 
-const addToBasketOnClick = ({ proxy, productId }) => {
+const addToCartOnClick = ({ proxy, productId }) => {
   const apiClient = useApiClient();
 
   proxy.addEventListener('click', async (event) => {
     event.preventDefault();
-    proxy.classList.add('loading');
     const result = await apiClient.addProductToCart(productId);
-    console.log(result);
-    proxy.classList.remove('loading');
+
+    proxy.dispatchEvent(new CustomEvent('add-to-cart', {
+      detail: {
+        message: result
+      }
+    }));
   });
 
   return [];
 };
 
-export default addToBasketOnClick;
+export default addToCartOnClick;

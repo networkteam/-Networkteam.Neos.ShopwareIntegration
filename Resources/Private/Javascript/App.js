@@ -2,7 +2,8 @@ import 'core-js';
 import 'regenerator-runtime/runtime';
 import ReactHabitat from 'react-habitat';
 import ApiDomFactory from './Habitat/factory';
-import AddToBasket from './Components/AddToBasket';
+import AddToCart from './Components/AddToCart';
+import RemoveFromCart from './Components/RemoveFromCart';
 import CartItems from './Components/CartItems';
 import CartSummary from './Components/CartSummary';
 import Connector from 'shopware-connector';
@@ -19,8 +20,13 @@ class App extends ReactHabitat.Bootstrapper {
     builder.factory = new ApiDomFactory(client);
 
     builder
-      .register(AddToBasket)
-      .as('AddToBasket')
+      .register(AddToCart)
+      .as('AddToCart')
+      .withOptions({ replaceDisabled: true });
+
+    builder
+      .register(RemoveFromCart)
+      .as('RemoveFromCart')
       .withOptions({ replaceDisabled: true });
 
     builder
