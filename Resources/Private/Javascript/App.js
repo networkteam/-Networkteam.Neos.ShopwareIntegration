@@ -6,6 +6,7 @@ import AddToCart from './Components/AddToCart';
 import RemoveFromCart from './Components/RemoveFromCart';
 import UpdateQuantity from './Components/UpdateQuantity';
 import Cart from './Components/Cart';
+import Orders from './Components/Orders';
 import Connector from 'shopware-connector';
 
 class App extends ReactHabitat.Bootstrapper {
@@ -37,6 +38,10 @@ class App extends ReactHabitat.Bootstrapper {
     builder
       .register(Cart)
       .as('Cart');
+
+    builder
+      .register(Orders)
+      .as('Orders');
 
     this.setContainer(builder.build());
   }

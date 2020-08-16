@@ -22,6 +22,10 @@ env.addFilter('currency', (number, locales = 'de-DE', currency = 'EUR') => {
     }
 });
 
+env.addFilter('localDate', (date) => {
+    return new Date(date).toLocaleDateString()
+});
+
 export const replaceTemplatePlaceholder = (template, data) => {
     return env.renderString(template, data);
 }

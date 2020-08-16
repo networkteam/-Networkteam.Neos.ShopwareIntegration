@@ -1,0 +1,46 @@
+prototype(Networkteam.Neos.ShopwareIntegration:Templates.OrderOverview) < prototype(Neos.Fusion:Component) {
+    tagName = ''
+    limit = 10
+    page = 1
+    additionalClasses = ''
+
+    renderer = afx`
+        <script
+            type="text/template"
+            data-component="Orders"
+            data-prop-tag-name={props.tagName}
+            data-prop-limit={props.limit}
+            data-prop-page={props.page}
+            data-prop-additional-classes={props.additionalClasses}
+        >
+            [% if orders.length > 0 %]
+                <ul>
+                    [% for order in orders %]
+                        <li>
+                            <dl>
+                                <dt>Order:</dt>
+                                <dd>[[ order.orderNumber ]]</dd>
+                                <dt>Order state:</dt>
+                                <dd>[[ order.stateMachineState.name ]]</dd>
+                                <dt>Order date:</dt>
+                                <dd>[[ order.orderDate|localDate ]]</dd>
+                                <dt>Total (net):</dt>
+                                <dd>[[ order.amountNet|currency ]]</dd>
+                                [% for tax in order.price.calculatedTaxes %]
+                                    <dt>plus [[ tax.taxRate ]]% tax:</dt>
+                                    <dd>[[ tax.tax|currency ]]</dd>
+                                [% endfor %]
+                                <dt>Shopping costs:</dt>
+                                <dd>[[ order.shippingTotal|currency ]]</dd>
+                                <dt>Total ([[ order.taxStatus ]]):</dt>
+                                <dd>[[ order.price.amountTotal|currency ]]</dd>
+                            </dl>
+                        </li>
+                    [% endfor %]
+                </ul>
+            [% else %]
+                <div>You have not ordered yet</div>
+            [% endif %]
+        </script>
+    `
+}
