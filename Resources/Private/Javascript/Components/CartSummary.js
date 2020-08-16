@@ -26,14 +26,14 @@ const CartSummary = ({ proxy, tagName, additionalClasses, hideOnEmptyCart }) => 
   },[])
 
   const Content = () => {
-    if(!loading && (!hideOnEmptyCart || cartData.lineItems > 0)) {
+    if(loading || (hideOnEmptyCart && cartData.lineItems.lenght > 0)) {
+      return []
+    } else {
       const cartSummary = replaceTemplatePlaceholder(template, cartData);
 
       return (
         <Tag className={additionalClasses} dangerouslySetInnerHTML={{ __html: cartSummary }}></Tag>
       );
-    } else {
-      return []
     }
   };
 

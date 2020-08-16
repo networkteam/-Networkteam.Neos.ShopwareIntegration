@@ -113,5 +113,5 @@ To use the widgets provided with the function and a minimum of markup add the co
 This widget is just a wrapper, that enhances your Markup with a Click Listener and the function to add an Element to the basket. You just need to datt two data-attributes to your existing markup:
 
 ```
-<button data-component="AddToBasket" data-prop-product-id="SomeID">TestButton</button>
+<button data-component="AddToCart" data-prop-product-id="SomeID">TestButton</button>
 ```
