@@ -24,16 +24,11 @@ export const replaceTemplatePlaceholder = (template, data) => {
     });
 }
 
-export const getDeepObjectValue = (object, path) => {
-    const pathSegments = path.split('.');
-    let current = object;
-
-    pathSegments.forEach((segment) => {
-        current = current[segment]; 
-    }); 
-
-    return current;
-};
+const getDeepObjectValue = (object, path) => {
+    return path.split('.').reduce((segment, value) => {
+        return segment[value] === undefined ? path : segment[value]
+    }, object);
+}
 
 // TODO: get selected currency dynamically
 export const currencyFormatter = (number) => {

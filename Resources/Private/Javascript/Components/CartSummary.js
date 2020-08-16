@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import { useApiClient } from '../Api/Context';
 import { replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const CartSummary = ({ proxy, tagName, additionalClasses }) => {
+const CartSummary = ({ proxy, tagName, additionalClasses, hideOnEmptyCart }) => {
   const apiClient = useApiClient();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const CartSummary = ({ proxy, tagName, additionalClasses }) => {
   },[])
 
   const Content = () => {
-    if(!loading && cartData.lineItems.length > 0) {
+    if(!loading && (!hideOnEmptyCart || cartData.lineItems > 0)) {
       const cartSummary = replaceTemplatePlaceholder(template, cartData);
 
       return (
@@ -45,7 +45,8 @@ const CartSummary = ({ proxy, tagName, additionalClasses }) => {
 CartSummary.propTypes = {
   proxy: propTypes.any,
   tagName: propTypes.string,
-  additionalClasses: propTypes.string
+  additionalClasses: propTypes.string,
+  hideOnEmptyCart: propTypes.bool
 };
 
 export default CartSummary;
