@@ -109,4 +109,21 @@ export class ShopwareConnector {
         .catch((e) => reject(e));
     });
   }
+
+  getOrderOverview(parameter) {
+    const url = endpoints.GET_ORDER_OVERVIEW;
+    const hasCookie = this.setContextTokenHeader();
+
+    return new Promise((resolve, reject) => {
+      this.client
+        .get(url, {...parameter})
+        .then((data) => {
+          if (!hasCookie) {
+            this.setContextTokenHeader(data.data.token);
+          }
+          resolve(data);
+        })
+        .catch((e) => reject(e));
+    });
+  }
 }
