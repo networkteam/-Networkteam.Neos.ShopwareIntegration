@@ -1,0 +1,62 @@
+prototype(Networkteam.Neos.ShopwareIntegration:Templates.Cart) < prototype(Neos.Fusion:Component) {
+    tagName = ''
+    additionalClasses = ''
+
+    renderer = afx`
+        <script
+            type="text/template"
+            data-component="Cart"
+            data-prop-tag-name={props.tagName}
+            data-prop-additional-classes={props.additionalClasses}
+        >
+            <div class="row">
+                <div class="col-12 col-md-9">
+                    [% if lineItems.length > 0 %]
+                        <ul>
+                            [% for product in lineItems %]
+                                <li>
+                                    <dl>
+                                        <dt>[[ product.label ]]</dt>
+                                        <dd>
+                                            <img src="[[ product.cover.url ]]" alt="" />
+                                        </dd>
+                                        <dd>[[ product.quantity ]]</dd>
+                                        <dd>[[ product.price.unitPrice|currency ]]</dd>
+                                        <dd>[[ product.price.totalPrice|currency ]]</dd>
+                                    </dl>
+                                </li>
+                            [% endfor %]
+                        </ul>
+                    [% else %]
+                        <div>Your shopping cart is empty</div>
+                    [% endif %]
+                </div>
+                <div class="col-12 col-md-3">
+                    <dl>
+                        <dt>Different products:</dt>
+                        <dd>[[ lineItems.length ]]</dd>
+
+                        <dt>Total:</dt>
+                        <dd>[[ price.positionPrice|currency ]]</dd>
+
+                        [% if deliveries[0].shippingCosts.totalPrice %]
+                            <dt>Shipping costs:</dt>
+                            <dd>[[ deliveries[0].shippingCosts.totalPrice|currency ]]</dd>
+                        [% endif %]
+
+                        <dt>Grand total:</dt>
+                        <dd>[[ price.totalPrice|currency ]]</dd>
+
+                        <dt>Net total:</dt>
+                        <dd>[[ price.netPrice|currency ]]</dd>
+
+                        [% for tax in price.calculatedTaxes %]
+                            <dt>plus [[ tax.taxRate ]]% tax:</dt>
+                            <dd>[[ tax.tax|currency ]]</dd>
+                        [% endfor %]
+                    </dl>
+                </div>
+            </div>
+        </script>
+    `
+}

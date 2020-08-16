@@ -1,40 +1,25 @@
-export const getTemplatePlaceholder = (template) => {
-    return [...new Set(template.match(/%(.*?)%/g))];
-};
+import nunjucks from 'nunjucks';
 
 export const replaceTemplatePlaceholder = (template, data) => {
-    const placeholder = getTemplatePlaceholder(template);
-    let regex = []
-    let map = {};
-
-    placeholder.forEach((element) => {
-        const isCurrency = element.endsWith('->currency%');
-        const variable = element.slice(1, isCurrency ? -11 : -1);
-        const unformattedValue = getDeepObjectValue(data, variable);
-        const value = isCurrency ? currencyFormatter(unformattedValue) : unformattedValue;
-
-        regex.push(element);
-        map[element] = value;
+    const env = nunjucks.configure({
+        tags: {
+            blockStart: '[%',
+            blockEnd: '%]',
+            variableStart: '[[',
+            variableEnd: ']]',
+            commentStart: '[#',
+            commentEnd: '#]'
+        }
     });
-
-    regex = regex.join('|');
-
-    return template.replace(new RegExp(regex, 'g'), (matched) => {
-        return map[matched];
+    env.addFilter('currency', (number, locales = 'de-DE', currency = 'EUR') => {
+        if(!isNaN(parseFloat(number)) && isFinite(number)) {
+            return new Intl.NumberFormat(locales, {
+                style: 'currency',
+                currency: currency
+            }).format(parseFloat(number))
+        } else {
+            return number
+        }
     });
-}
-
-const getDeepObjectValue = (object, path) => {
-    return path.split('.').reduce((segment, value) => {
-        return segment[value] === undefined ? path : segment[value]
-    }, object);
-}
-
-// TODO: get selected currency dynamically
-export const currencyFormatter = (number) => {
-    return new Intl.NumberFormat('de-DE', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 2
-    }).format(number);
+    return env.renderString(template, data);
 }

@@ -5,8 +5,7 @@ import ApiDomFactory from './Habitat/factory';
 import AddToCart from './Components/AddToCart';
 import RemoveFromCart from './Components/RemoveFromCart';
 import UpdateQuantity from './Components/UpdateQuantity';
-import CartItems from './Components/CartItems';
-import CartSummary from './Components/CartSummary';
+import Cart from './Components/Cart';
 import Connector from 'shopware-connector';
 
 class App extends ReactHabitat.Bootstrapper {
@@ -36,13 +35,8 @@ class App extends ReactHabitat.Bootstrapper {
       .withOptions({ replaceDisabled: true });
 
     builder
-      .register(CartItems)
-      .as('CartItems');
-
-    builder
-      .register(CartSummary)
-      .as('CartSummary')
-      .withOptions({ replaceDisabled: true });
+      .register(Cart)
+      .as('Cart');
 
     this.setContainer(builder.build());
   }

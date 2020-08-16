@@ -4,12 +4,12 @@ import propTypes from "prop-types";
 import { useApiClient } from '../Api/Context';
 import { replaceTemplatePlaceholder } from '../Helper/templateHelper';
 
-const CartSummary = ({ proxy, tagName, additionalClasses, hideOnEmptyCart }) => {
+const Cart = ({ proxy, tagName, additionalClasses }) => {
   const apiClient = useApiClient();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const template = proxy.innerHTML;
-  const Tag = `${tagName}`;
+  const Tag = tagName ? `${tagName}` : `div`;
 
   useEffect(() => {
     async function fetchData() {
@@ -26,13 +26,15 @@ const CartSummary = ({ proxy, tagName, additionalClasses, hideOnEmptyCart }) => 
   },[])
 
   const Content = () => {
-    if(loading || (hideOnEmptyCart && cartData.lineItems.lenght > 0)) {
-      return []
+    if(loading) {
+      return (
+        <div className={'loading loading--placeholder'}></div>
+      );
     } else {
-      const cartSummary = replaceTemplatePlaceholder(template, cartData);
+      const html = replaceTemplatePlaceholder(template, cartData);
 
       return (
-        <Tag className={additionalClasses} dangerouslySetInnerHTML={{ __html: cartSummary }}></Tag>
+        <Tag className={additionalClasses} dangerouslySetInnerHTML={{ __html: html }}></Tag>
       );
     }
   };
@@ -42,11 +44,10 @@ const CartSummary = ({ proxy, tagName, additionalClasses, hideOnEmptyCart }) => 
   );
 };
 
-CartSummary.propTypes = {
+Cart.propTypes = {
   proxy: propTypes.any,
   tagName: propTypes.string,
-  additionalClasses: propTypes.string,
-  hideOnEmptyCart: propTypes.bool
+  additionalClasses: propTypes.string
 };
 
-export default CartSummary;
+export default Cart;
