@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from "react";
-import propTypes from "prop-types";
+import React, { createContext, useContext } from 'react';
+import propTypes from 'prop-types';
 
 const ApiContext = createContext(null);
 
@@ -18,7 +18,7 @@ export const useApiClient = () => {
   if (!client) {
     throw new Error(
       'Could not find "client" in the context or passed in as a prop. ' +
-        "Wrap the root component in an <ApiProvider>."
+        'Wrap the root component in an <ApiProvider>.'
     );
   }
 

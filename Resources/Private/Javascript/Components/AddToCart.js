@@ -7,7 +7,7 @@ const addToCartOnClick = ({ proxy, productId }) => {
     event.preventDefault();
     const result = await apiClient.addProductToCart(productId);
 
-    proxy.dispatchEvent(new CustomEvent('add-to-cart', {
+    document.dispatchEvent(new CustomEvent('added-to-cart', {
       detail: {
         message: result
       }
