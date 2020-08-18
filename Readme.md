@@ -89,3 +89,29 @@ prototype(Vendor.Site:Page) {
     }
 }
 ```
+
+## ShopwareRuntime
+You can use a ShopwareRuntime in your own Javascript. It is a global umd module and can be accessed as `window.ShopwareRuntime`. Alternatively you can use it as an external module your build process, e.g. in webpack 5:
+
+```
+externals: {
+    'shopware-connector': {
+        root: ['ShopwareRuntime', 'ShopwareConnector'],
+        commonjs: ['ShopwareRuntime', 'ShopwareConnector'],
+        commonjs2: ['ShopwareRuntime', 'ShopwareConnector'],
+    },
+}
+```
+
+To use the Runtime, add the corresponding Javascript to your page, e.g. by adding `Networkteam.Neos.ShopwareIntegration:Shopware.Widgets.Js` to your scripts
+
+
+## Widgets (require ShopwareRuntime JS)
+To use the widgets provided with the function and a minimum of markup add the corresponding javascript to your page. Just add `Networkteam.Neos.ShopwareIntegration:Shopware.Widgets.Js` to your scripts.
+
+### AddToBasket Widget
+This widget is just a wrapper, that enhances your Markup with a Click Listener and the function to add an Element to the basket. You just need to datt two data-attributes to your existing markup:
+
+```
+<button data-component="AddToBasket" data-prop-product-id="SomeID">TestButton</button>
+```

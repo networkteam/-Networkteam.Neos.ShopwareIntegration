@@ -9,20 +9,23 @@
     "start": "npm run webpack:watch",
     "test": "npm run webpack:test",
     "test-watch": "npm run webpack:test-watch",
-    "webpack": "networkteam-asset-build prod --basePackage $npm_package_basePackageName --noIconFont",
-    "webpack:dev": "networkteam-asset-build dev --basePackage $npm_package_basePackageName --noIconFont",
-    "webpack:watch": "networkteam-asset-build watch --basePackage $npm_package_basePackageName --noIconFont",
-    "webpack:test": "networkteam-asset-build test --basePackage $npm_package_basePackageName --noIconFont",
-    "webpack:test-watch": "networkteam-asset-build test-watch --basePackage $npm_package_basePackageName --noIconFont"
+    "webpack": "networkteam-asset-build prod --basePackage '.'",
+    "webpack:dev": "networkteam-asset-build dev --basePackage '.'",
+    "webpack:watch": "networkteam-asset-build watch --basePackage '.'",
+    "webpack:test": "networkteam-asset-build test --basePackage '.'",
+    "webpack:test-watch": "networkteam-asset-build test-watch --basePackage '.'"
   },
   "author": "networkteam",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-habitat": "^1.0.1"
   },
   "devDependencies": {
-    "@networkteam/frontend-scripts": "^2.0.0"
+    "@networkteam/frontend-scripts": "^3.0",
+    "eslint-plugin-react": "^7.20.6",
+    "prettier": "^2.0.5"
   }
 }

@@ -1,0 +1,9 @@
+prototype(Networkteam.Neos.ShopwareIntegration:Shopware.Runtime.Js) < prototype(Neos.Fusion:Tag) {
+    tagName = 'script'
+    attributes {
+        type = 'application/javascript'
+        src = Neos.Fusion:ResourceUri {
+            path = 'resource://Networkteam.Neos.ShopwareIntegration/Public/Dist/ShopwareRuntime.js'
+        }
+    }
+}

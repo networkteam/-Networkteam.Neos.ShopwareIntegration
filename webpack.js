@@ -7,7 +7,20 @@ module.exports = function (env, args) {
       footer: null,
       main: null,
       print: '',
-      ['shopware-integration']: './Resources/Private/Javascript/index.js'
+      ShopwareRuntime: './Resources/Private/Javascript/Connector.js',
+      ['shopware-widgets']: './Resources/Private/Javascript/App.js'
     },
+    externals: {
+      'shopware-connector': {
+        root: ['ShopwareRuntime', 'ShopwareConnector'],
+        commonjs: ['ShopwareRuntime', 'ShopwareConnector'],
+        commonjs2: ['ShopwareRuntime', 'ShopwareConnector'],
+      },
+    },
+
+    output: {
+      library: '[name]',
+      libraryTarget: 'umd'
+    }
   };
 };
