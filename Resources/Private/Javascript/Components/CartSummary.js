@@ -7,7 +7,7 @@ import { formatCurrency } from '../Helper/utilities';
 
 const CartSummary = () => {
   const apiClient = useApiClient();
-  const [cartData, setCartData] = useState({'lineItems': []});
+  const [cartData, setCartData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,34 +24,34 @@ const CartSummary = () => {
   },[])
 
   return (
-    <div>
+    <div className='c-cart-summary'>
       <Overlay loading={loading} />
 
-      {Object.keys(cartData).length > 1 ?
-        <dl>
-          <dt>Different products:</dt>
-          <dd>{cartData.lineItems.length}</dd>
+      {Object.keys(cartData).length > 0 ?
+        <dl className='c-cart-summary__list'>
+          <dt className='c-cart-summary__label c-cart-summary__label--count'>Different products:</dt>
+          <dd className='c-cart-summary__value c-cart-summary__value--count'>{cartData.lineItems.length}</dd>
 
-          <dt>Total:</dt>
-          <dd>{formatCurrency(cartData.price.positionPrice)}</dd>
+          <dt className='c-cart-summary__label c-cart-summary__label--total'>Total:</dt>
+          <dd className='c-cart-summary__value c-cart-summary__value--total'>{formatCurrency(cartData.price.positionPrice)}</dd>
 
-          {cartData.deliveries[0].shippingCosts.totalPrice ?
+          {cartData.deliveries.length > 0 ?
             <>
-              <dt>Shipping costs:</dt>
-              <dd>{formatCurrency(cartData.deliveries[0].shippingCosts.totalPrice)}</dd>
+              <dt className='c-cart-summary__label c-cart-summary__label--shipping'>Shipping {cartData.deliveries[0].shippingMethod.name}:</dt>
+              <dd className='c-cart-summary__value c-cart-summary__value--shipping'>{formatCurrency(cartData.deliveries[0].shippingCosts.totalPrice)}</dd>
             </>
           : null }
 
-          <dt>Grand total:</dt>
-          <dd>{formatCurrency(cartData.price.totalPrice)}</dd>
+          <dt className='c-cart-summary__label c-cart-summary__label--grand-total'>Grand total:</dt>
+          <dd className='c-cart-summary__value c-cart-summary__value--grand-total'>{formatCurrency(cartData.price.totalPrice)}</dd>
 
-          <dt>Net total:</dt>
-          <dd>{formatCurrency(cartData.price.netPrice)}</dd>
+          <dt className='c-cart-summary__label c-cart-summary__label--net-total'>Net total:</dt>
+          <dd className='c-cart-summary__value c-cart-summary__value--net-total'>{formatCurrency(cartData.price.netPrice)}</dd>
 
           {cartData.price.calculatedTaxes.map(tax => (
-            <div key={tax.taxRate}>
-              <dt>plus {tax.taxRate}% tax:</dt>
-              <dd>{formatCurrency(tax.tax)}</dd>
+            <div className='c-cart-summary__wrapper c-cart-summary__wrapper--tax' key={tax.taxRate}>
+              <dt className='c-cart-summary__label c-cart-summary__label--tax'>plus {tax.taxRate}% tax:</dt>
+              <dd className='c-cart-summary__value c-cart-summary__value--tax'>{formatCurrency(tax.tax)}</dd>
             </div>
           ))}
         </dl>

@@ -3,8 +3,7 @@ export const setCookie = (name, value, days = 7, path = '/') => {
   document.cookie =
     name +
     '=' +
-    encodeURIComponent('48mLnJcQBT8L0hYiSsjJQH4XWGNqyoWg') +
-    // encodeURIComponent(value) +
+    encodeURIComponent(value) +
     '; expires=' +
     expires +
     '; path=' +
