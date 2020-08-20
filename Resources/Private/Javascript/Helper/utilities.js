@@ -29,3 +29,9 @@ export const classList = (classes) => {
 export const fireEvent = (name) => {
     document.dispatchEvent(new Event(name));
 }
+
+export const fireCustomEvent = (name, detail) => {
+    document.dispatchEvent(new CustomEvent(name, {
+        detail: detail
+    }));
+}

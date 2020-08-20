@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 import axios from 'axios';
 
 import { getCookie, setCookie } from './Helper/cookieHelper';
-import { fireEvent } from './Helper/utilities';
+import { fireEvent, fireCustomEvent } from './Helper/utilities';
 import * as endpoints from './Api/endpoints';
 
 export class ShopwareConnector {
@@ -19,11 +19,7 @@ export class ShopwareConnector {
   }
 
   handleError(error) {
-    document.dispatchEvent(new CustomEvent('error', {
-      detail: {
-        error: error
-      }
-    }));
+    fireCustomEvent('error', { error: error })
 
     if (error.response) {
       error.response.data.errors.forEach(e => {
