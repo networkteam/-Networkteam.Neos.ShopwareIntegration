@@ -73,7 +73,11 @@ export class ShopwareConnector {
         if (!hasCookie) {
           this.setContextTokenHeader(data.data.token);
         }
-        resolve(data);
+        if (data.status == 200) {
+          resolve(data)
+        } else {
+          console.log(data)
+        }
       })
       .catch((e) => this.handleError(e));
     });
