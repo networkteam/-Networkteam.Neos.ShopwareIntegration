@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Overlay from '../Components/Overlay'
+import Overlay from './Overlay'
 
 import { useApiClient } from '../Api/Context';
 import { formatCurrency } from '../Helper/utilities';
