@@ -7,7 +7,7 @@ const removeFromCartOnClick = ({ proxy, lineItemId }) => {
     event.preventDefault();
     const result = await apiClient.removeLineItemFromCart(lineItemId);
 
-    if(result === 'success') {
+    if(result.status == 200) {
       document.dispatchEvent(new Event('cart-changed'));
       document.dispatchEvent(new CustomEvent('removed-from-cart', {
         detail: {
