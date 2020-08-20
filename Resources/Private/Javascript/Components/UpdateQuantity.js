@@ -12,7 +12,7 @@ const updateQuantity = ({ proxy, lineItemId }) => {
       }
     );
 
-    if(result === 'success') {
+    if(result.status == 200) {
       document.dispatchEvent(new Event('cart-changed'));
       document.dispatchEvent(new CustomEvent('updating-line-item', {
         detail: {

@@ -60,87 +60,42 @@ export class ShopwareConnector {
     }
   }
 
-  post(url, parameter) {
+  request(method, url, parameter) {
     const hasCookie = this.setContextTokenHeader();
 
     return new Promise((resolve, reject) => {
-      this.client
-        .post(url, {...parameter})
-        .then((data) => {
-          if (!hasCookie) {
-            this.setContextTokenHeader(data.data.token);
-          }
-          resolve('success');
-        })
-        .catch((e) => this.handleError(e));
-    });
-  }
-
-  get(url, parameter) {
-    const hasCookie = this.setContextTokenHeader();
-
-    return new Promise((resolve, reject) => {
-      this.client
-        .get(url, {...parameter})
-        .then((data) => {
-          if (!hasCookie) {
-            this.setContextTokenHeader(data.data.token);
-          }
-          resolve(data);
-        })
-        .catch((e) => this.handleError(e));
-    });
-  }
-
-  patch(url, parameter) {
-    const hasCookie = this.setContextTokenHeader();
-
-    return new Promise((resolve, reject) => {
-      this.client
-        .patch(url, {...parameter})
-        .then((data) => {
-          if (!hasCookie) {
-            this.setContextTokenHeader(data.data.token);
-          }
-          resolve('success');
-        })
-        .catch((e) => this.handleError(e));
-    });
-  }
-
-  delete(url, parameter) {
-    const hasCookie = this.setContextTokenHeader();
-
-    return new Promise((resolve, reject) => {
-      this.client
-        .delete(url, {...parameter})
-        .then((data) => {
-          if (!hasCookie) {
-            this.setContextTokenHeader(data.data.token);
-          }
-          resolve('success');
-        })
-        .catch((e) => this.handleError(e));
+      this.client({
+        method: method,
+        url: url,
+        data: { ...parameter }
+      })
+      .then((data) => {
+        if (!hasCookie) {
+          this.setContextTokenHeader(data.data.token);
+        }
+        resolve(data);
+      })
+      .catch((e) => this.handleError(e));
     });
   }
 
   addProductToCart(productId) {
     const url = endpoints.ADD_TO_CART_BASE + productId;
-    return this.post(url);
+    return this.request('post', url);
   }
 
   removeLineItemFromCart(lineItemId) {
     const url = endpoints.DELETE_LINE_ITEM_BASE + lineItemId;
-    return this.delete(url);
+    return this.request('delete', url);
   }
 
   getCart() {
     const url = endpoints.GET_CART;
-    return this.get(url);
+    return this.request('get', url);
   }
 
   updateLineItem(lineItemId, parameter) {
     const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
-    return this.patch(url, parameter);
+    return this.request('patch', url, parameter);
   }
 }
