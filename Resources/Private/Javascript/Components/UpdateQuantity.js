@@ -5,10 +5,12 @@ const updateQuantity = ({ proxy, lineItemId }) => {
   const apiClient = useApiClient();
 
   const update = debounce(async (value) => {
-    apiClient.updateLineItem(
+    proxy.classList.add('u-loading');
+    await apiClient.updateLineItem(
       lineItemId,
       { quantity: parseInt(value) }
     );
+    proxy.classList.remove('u-loading');
   }, 500);
 
   proxy.addEventListener('change', (event) => {
