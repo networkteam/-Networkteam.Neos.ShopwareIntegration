@@ -5,22 +5,10 @@ const updateQuantity = ({ proxy, lineItemId }) => {
   const apiClient = useApiClient();
 
   const update = debounce(async (value) => {
-    const result = await apiClient.updateLineItem(
+    apiClient.updateLineItem(
       lineItemId,
-      {
-        quantity: parseInt(value)
-      }
+      { quantity: parseInt(value) }
     );
-
-    if(result.status == 200) {
-      document.dispatchEvent(new Event('cart-changed'));
-      document.dispatchEvent(new CustomEvent('updating-line-item', {
-        detail: {
-          element: proxy,
-          message: result
-        }
-      }));
-    }
   }, 500);
 
   proxy.addEventListener('change', (event) => {

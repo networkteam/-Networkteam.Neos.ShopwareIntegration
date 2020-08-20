@@ -37,6 +37,12 @@ const CartItems = ({ emptyMessage = 'Your shopping cart is empty' }) => {
               <div className='c-cart-items__quantity'>{product.quantity}</div>
               <div className='c-cart-items__unit-price'>{formatCurrency(product.price.unitPrice)}</div>
               <div className='c-cart-items__total-price'>{formatCurrency(product.price.totalPrice)}</div>
+              <select value={product.quantity} onChange={(e) => apiClient.updateLineItem(product.id, { quantity: parseInt(e.target.value) })}>
+                {[...Array(product.quantityInformation.maxPurchase - product.quantityInformation.minPurchase + 1)].map((x, i) =>
+                  <option key={i} value={i + 1}>{i + 1}</option>
+                )}
+              </select>
+              <button onClick={() => apiClient.removeLineItemFromCart(product.id)}>Delete</button>
             </li>
           ))}
         </ul>

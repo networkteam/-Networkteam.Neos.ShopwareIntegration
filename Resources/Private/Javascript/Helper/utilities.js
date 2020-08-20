@@ -25,3 +25,7 @@ export const classList = (classes) => {
         .map(entry => entry[0])
         .join(' ');
 }
+
+export const fireEvent = (name) => {
+    document.dispatchEvent(new Event(name));
+}
