@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 
-import Overlay from '../Components/Overlay'
+import Overlay from './Overlay';
+import DefinitionList, { DefinitionItem } from './DefinitionList';
 
 import { useApiClient } from '../Api/Context';
 import { formatCurrency, formatLocalDate } from '../Helper/utilities';
@@ -29,32 +30,52 @@ const Orders = ({ emptyMessage = 'You have not ordered yet' }) => {
         <ul className='c-orders__list'>
           {orderItems.map(order => (
             <li className='c-orders__order' key={order.id}>
-              <dl className='c-orders__order-details'>
-                <dt className='c-orders__label c-orders__label--number'>Order:</dt>
-                <dd className='c-orders__value c-orders__value--number'>{order.orderNumber}</dd>
+              <DefinitionList modifier='orders'>
+                <DefinitionItem
+                  label='Order:'
+                  value={order.orderNumber}
+                  modifier='number'
+                />
 
-                <dt className='c-orders__label c-orders__label--state'>Order state:</dt>
-                <dd className='c-orders__value c-orders__value--state'>{order.stateMachineState.name}</dd>
+                <DefinitionItem
+                  label='Order state:'
+                  value={order.stateMachineState.name}
+                  modifier='state'
+                />
 
-                <dt className='c-orders__label c-orders__label--date'>Order date:</dt>
-                <dd className='c-orders__value c-orders__value--date'>{formatLocalDate(order.orderDate)}</dd>
+                <DefinitionItem
+                  label='Order date:'
+                  value={formatLocalDate(order.orderDate)}
+                  modifier='date'
+                />
 
-                <dt className='c-orders__label c-orders__label--net-total'>Total (net):</dt>
-                <dd className='c-orders__value c-orders__value--net-total'>{formatCurrency(order.amountNet)}</dd>
+                <DefinitionItem
+                  label='Total (net):'
+                  value={formatCurrency(order.amountNet)}
+                  modifier='net-total'
+                />
 
                 {order.price.calculatedTaxes.map(tax => (
-                  <div key={tax.taxRate}>
-                    <dt className='c-orders__label c-orders__label--tax'>plus {tax.taxRate}% tax:</dt>
-                    <dd className='c-orders__value c-orders__value--tax'>{formatCurrency(tax.tax)}</dd>
-                  </div>
+                  <DefinitionItem
+                    label={`plus ${tax.taxRate}% tax:`}
+                    value={formatCurrency(tax.tax)}
+                    modifier='tax'
+                    key={tax.taxRate}
+                  />
                 ))}
 
-                <dt className='c-orders__label c-orders__label--shipping'>Shipping costs:</dt>
-                <dd className='c-orders__value c-orders__value--shipping'>{formatCurrency(order.shippingTotal)}</dd>
+                <DefinitionItem
+                  label='Shipping costs:'
+                  value={formatCurrency(order.shippingTotal)}
+                  modifier='shipping'
+                />
 
-                <dt className='c-orders__label c-orders__label--total'>Total ({order.taxStatus}):</dt>
-                <dd className='c-orders__value c-orders__value--total'>{formatCurrency(order.amountTotal)}</dd>
-              </dl>
+                <DefinitionItem
+                  label={`Total (${order.taxStatus}):`}
+                  value={formatCurrency(order.amountTotal)}
+                  modifier='total'
+                />
+              </DefinitionList>
             </li>
           ))}
         </ul>
