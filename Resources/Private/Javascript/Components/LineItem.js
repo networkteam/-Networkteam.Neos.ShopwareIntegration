@@ -3,9 +3,11 @@ import propTypes from 'prop-types';
 
 import { useApiClient } from '../Api/Context';
 import { formatCurrency } from '../Helper/utilities';
+import { i18n } from '../Helper/i18n';
 
-const LineItem = ({ product }) => {
+const LineItem = ({ product, translation }) => {
   const apiClient = useApiClient();
+  const labels = {...i18n.lineItem, ...translation}
   const minPurchase = product.quantityInformation.minPurchase ? product.quantityInformation.minPurchase : 1
   const maxPurchase = product.quantityInformation.maxPurchase ? product.quantityInformation.maxPurchase : 100
   const difference = maxPurchase - minPurchase + 1;
@@ -35,13 +37,14 @@ const LineItem = ({ product }) => {
           <option key={value} value={value}>{value}</option>
         )}
       </select>
-      <button onClick={removeLineItem}>Delete</button>
+      <button onClick={removeLineItem}>{labels.buttonDelete}</button>
     </li>
   );
 };
 
 LineItem.propTypes = {
-  product: propTypes.object
+  product: propTypes.object,
+  translation: propTypes.object
 };
 
 export default LineItem;

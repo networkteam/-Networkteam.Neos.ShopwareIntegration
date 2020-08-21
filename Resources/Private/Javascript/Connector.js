@@ -57,7 +57,7 @@ export class ShopwareConnector {
     }
   }
 
-  request(method, url, parameter) {
+  _request(method, url, parameter) {
     const hasCookie = this.setContextTokenHeader();
 
     return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ export class ShopwareConnector {
       })
       .then((data) => {
         if (!hasCookie) {
-          this.setContextTokenHeader(data.data.token);
+          this.setContextTokenHeader(data.data.data.token);
         }
         if (data.status == 200) {
           resolve(data)
@@ -84,7 +84,7 @@ export class ShopwareConnector {
     fireEvent('begin_add-to-cart');
 
     const url = endpoints.ADD_TO_CART_BASE + productId;
-    const result = await this.request('post', url);
+    const result = await this._request('post', url);
 
     if(result) {
       fireEvent('completed_add-to-cart');
@@ -97,7 +97,7 @@ export class ShopwareConnector {
     fireEvent('begin_remove-from-cart');
 
     const url = endpoints.DELETE_LINE_ITEM_BASE + lineItemId;
-    const result = await this.request('delete', url);
+    const result = await this._request('delete', url);
 
     if(result) {
       fireEvent('completed_remove-from-cart');
@@ -110,7 +110,7 @@ export class ShopwareConnector {
     fireEvent('begin_update-line-item');
 
     const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
-    const result = await this.request('patch', url, parameter);
+    const result = await this._request('patch', url, parameter);
 
     if(result) {
       fireEvent('completed_update-line-item');
@@ -121,6 +121,11 @@ export class ShopwareConnector {
 
   getCart() {
     const url = endpoints.GET_CART;
-    return this.request('get', url);
+    return this._request('get', url);
+  }
+
+  getOrders() {
+    const url = endpoints.GET_ORDERS;
+    return this._request('get', url);
   }
 }
