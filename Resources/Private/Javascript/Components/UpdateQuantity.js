@@ -12,13 +12,13 @@ const updateQuantity = ({ proxy, lineItemId }) => {
       }
     );
 
+    document.dispatchEvent(new Event('cart-changed'));
     document.dispatchEvent(new CustomEvent('updating-line-item', {
       detail: {
         element: proxy,
         message: result
       }
     }));
-    document.dispatchEvent(new Event('cart-changed'));
   }, 500);
 
   proxy.addEventListener('change', (event) => {

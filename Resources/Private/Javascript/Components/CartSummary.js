@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import Overlay from '../Components/Overlay'
+import Overlay from './Overlay';
+import DefinitionList, { DefinitionItem } from './DefinitionList';
 
 import { useApiClient } from '../Api/Context';
 import { formatCurrency } from '../Helper/utilities';
 
 const CartSummary = () => {
   const apiClient = useApiClient();
-  const [cartData, setCartData] = useState({'lineItems': []});
+  const [cartData, setCartData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,37 +25,52 @@ const CartSummary = () => {
   },[])
 
   return (
-    <div>
+    <div className='c-cart-summary'>
       <Overlay loading={loading} />
 
-      {Object.keys(cartData).length > 1 ?
-        <dl>
-          <dt>Different products:</dt>
-          <dd>{cartData.lineItems.length}</dd>
+      {Object.keys(cartData).length > 0 ?
+        <DefinitionList modifier='summary'>
+          <DefinitionItem 
+            label='Unique products:'
+            value={cartData.lineItems.length}
+            modifier='count'
+          />
 
-          <dt>Total:</dt>
-          <dd>{formatCurrency(cartData.price.positionPrice)}</dd>
+          <DefinitionItem
+            label='Total:'
+            value={formatCurrency(cartData.price.positionPrice)}
+            modifier='total'
+          />
 
-          {cartData.deliveries[0].shippingCosts.totalPrice ?
-            <>
-              <dt>Shipping costs:</dt>
-              <dd>{formatCurrency(cartData.deliveries[0].shippingCosts.totalPrice)}</dd>
-            </>
+          {cartData.deliveries.length > 0 ?
+            <DefinitionItem
+              label={`Shipping ${cartData.deliveries[0].shippingMethod.name}:`}
+              value={formatCurrency(cartData.deliveries[0].shippingCosts.totalPrice)}
+              modifier='shipping'
+              />
           : null }
 
-          <dt>Grand total:</dt>
-          <dd>{formatCurrency(cartData.price.totalPrice)}</dd>
+          <DefinitionItem
+            label='Grand total:'
+            value={formatCurrency(cartData.price.totalPrice)}
+            modifier='grand-total'
+          />
 
-          <dt>Net total:</dt>
-          <dd>{formatCurrency(cartData.price.netPrice)}</dd>
+          <DefinitionItem
+            label='Net total:'
+            value={formatCurrency(cartData.price.netPrice)}
+            modifier='net-total'
+          />
 
           {cartData.price.calculatedTaxes.map(tax => (
-            <div key={tax.taxRate}>
-              <dt>plus {tax.taxRate}% tax:</dt>
-              <dd>{formatCurrency(tax.tax)}</dd>
-            </div>
+            <DefinitionItem
+              label={`plus ${tax.taxRate}% tax:`}
+              value={formatCurrency(tax.tax)}
+              modifier='tax'
+              key={tax.taxRate}
+            />
           ))}
-        </dl>
+        </DefinitionList>
       : null }
     </div>
   );
