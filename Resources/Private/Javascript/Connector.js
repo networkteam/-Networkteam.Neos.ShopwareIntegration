@@ -3,6 +3,7 @@ import 'regenerator-runtime/runtime';
 import axios from 'axios';
 
 import { getCookie, setCookie } from './Helper/cookieHelper';
+import { fireEvent, fireCustomEvent } from './Helper/utilities';
 import * as endpoints from './Api/endpoints';
 
 export class ShopwareConnector {
@@ -18,11 +19,7 @@ export class ShopwareConnector {
   }
 
   handleError(error) {
-    document.dispatchEvent(new CustomEvent('error', {
-      detail: {
-        error: error
-      }
-    }));
+    fireCustomEvent('error', { error: error })
 
     if (error.response) {
       error.response.data.errors.forEach(e => {
@@ -83,23 +80,47 @@ export class ShopwareConnector {
     });
   }
 
-  addProductToCart(productId) {
+  async addProductToCart(productId) {
+    fireEvent('begin_add-to-cart');
+
     const url = endpoints.ADD_TO_CART_BASE + productId;
-    return this.request('post', url);
+    const result = await this.request('post', url);
+
+    if(result) {
+      fireEvent('completed_add-to-cart');
+      fireEvent('cart-changed');
+      return result;
+    }
   }
 
-  removeLineItemFromCart(lineItemId) {
+  async removeLineItemFromCart(lineItemId) {
+    fireEvent('begin_remove-from-cart');
+
     const url = endpoints.DELETE_LINE_ITEM_BASE + lineItemId;
-    return this.request('delete', url);
+    const result = await this.request('delete', url);
+
+    if(result) {
+      fireEvent('completed_remove-from-cart');
+      fireEvent('cart-changed');
+      return result;
+    }
+  }
+
+  async updateLineItem(lineItemId, parameter) {
+    fireEvent('begin_update-line-item');
+
+    const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
+    const result = await this.request('patch', url, parameter);
+
+    if(result) {
+      fireEvent('completed_update-line-item');
+      fireEvent('cart-changed');
+      return result;
+    }
   }
 
   getCart() {
     const url = endpoints.GET_CART;
     return this.request('get', url);
-  }
-
-  updateLineItem(lineItemId, parameter) {
-    const url = endpoints.UPDATE_LINE_ITEM_BASE + lineItemId;
-    return this.request('patch', url, parameter);
   }
 }

@@ -30,7 +30,7 @@ const CartSummary = () => {
 
       {Object.keys(cartData).length > 0 ?
         <DefinitionList modifier='summary'>
-          <DefinitionItem 
+          <DefinitionItem
             label='Unique products:'
             value={cartData.lineItems.length}
             modifier='count'

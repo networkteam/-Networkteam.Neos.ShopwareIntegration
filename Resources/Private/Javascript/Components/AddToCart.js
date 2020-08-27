@@ -5,17 +5,9 @@ const addToCartOnClick = ({ proxy, productId }) => {
 
   proxy.addEventListener('click', async (event) => {
     event.preventDefault();
-    const result = await apiClient.addProductToCart(productId);
-
-    if(result.status == 200) {
-      document.dispatchEvent(new Event('cart-changed'));
-      document.dispatchEvent(new CustomEvent('added-to-cart', {
-        detail: {
-          element: proxy,
-          message: result
-        }
-      }));
-    }
+    proxy.classList.add('u-loading');
+    await apiClient.addProductToCart(productId);
+    proxy.classList.remove('u-loading');
   });
 
   return [];

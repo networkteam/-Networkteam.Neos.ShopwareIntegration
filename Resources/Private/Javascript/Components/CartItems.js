@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 
-import Overlay from '../Components/Overlay'
+import Overlay from './Overlay'
+import LineItem from './LineItem'
 
 import { useApiClient } from '../Api/Context';
-import { formatCurrency } from '../Helper/utilities';
 
 const CartItems = ({ emptyMessage = 'Your shopping cart is empty' }) => {
   const apiClient = useApiClient();
@@ -31,13 +31,7 @@ const CartItems = ({ emptyMessage = 'Your shopping cart is empty' }) => {
       {cartItems.length > 0 ?
         <ul className='c-cart-items__list'>
           {cartItems.map(product => (
-            <li className='c-cart-items__item' key={product.id}>
-              <img className='c-cart-items__image' src={product.cover.url} alt='' />
-              <div className='c-cart-items__label'>{product.label}</div>
-              <div className='c-cart-items__quantity'>{product.quantity}</div>
-              <div className='c-cart-items__unit-price'>{formatCurrency(product.price.unitPrice)}</div>
-              <div className='c-cart-items__total-price'>{formatCurrency(product.price.totalPrice)}</div>
-            </li>
+            <LineItem key={product.id} product={product} />
           ))}
         </ul>
       : 
