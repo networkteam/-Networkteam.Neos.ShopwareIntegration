@@ -5,9 +5,11 @@ import Overlay from './Overlay'
 import LineItem from './LineItem'
 
 import { useApiClient } from '../Api/Context';
+import { i18n } from '../Helper/i18n';
 
-const CartItems = ({ emptyMessage = 'Your shopping cart is empty' }) => {
+const CartItems = ({ translation }) => {
   const apiClient = useApiClient();
+  const labels = {...i18n.cartItems, ...translation}
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,14 +38,15 @@ const CartItems = ({ emptyMessage = 'Your shopping cart is empty' }) => {
         </ul>
       : 
         !loading ?
-          <div className='c-cart-items__empty-message'>{emptyMessage}</div>
+          <div className='c-cart-items__empty-message'>{labels.emptyMessage}</div>
         : null }
     </div>
   );
 };
 
 CartItems.propTypes = {
-  emptyMessage: propTypes.string
+  emptyMessage: propTypes.string,
+  translation: propTypes.object
 };
 
 export default CartItems;
